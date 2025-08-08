@@ -68,3 +68,57 @@
   margin-bottom: 20px;
   text-align: center;
 }
+
+.sub-sidebar {
+  width: 200px;
+  background-color: rgba(37, 70, 108, 0.8);
+  color: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+
+
+.sub-sidebar h3 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+.sub-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sub-sidebar li {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sub-sidebar-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; 
+}
+
+.sub-sidebar-menu li {
+  padding: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sub-sidebar-menu li.active {
+  background-color: white;
+  color: #25466C;
+  font-weight: bold;
+}
+
+#legeLi {
+  height: auto;
+  visibility: hidden;
+}
+
+
