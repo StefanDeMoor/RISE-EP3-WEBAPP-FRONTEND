@@ -34,6 +34,9 @@
   background-color: #25466C; /* zelfde kleur als topbar */
   color: white;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .sidebar ul {
@@ -55,4 +58,13 @@
   background-color: white;
   color: #282c34;
   font-weight: bold;
+}
+
+.sidebar-footer {
+  font-size: 10px; /* kleiner lettertype */
+  color: #D4AF37;
+  line-height: 1.4;
+  margin-top: auto; /* zorgt dat hij onderaan staat */
+  margin-bottom: 20px;
+  text-align: center;
 }

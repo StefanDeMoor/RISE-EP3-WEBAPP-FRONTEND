@@ -25,6 +25,11 @@ function App() {
               </li>
             ))}
           </ul>
+
+          <div className="sidebar-footer">
+            <p>Calculate at home!</p>
+            <p>For yourself or for your business.</p>
+          </div>
         </div>
 
         <div className="content">

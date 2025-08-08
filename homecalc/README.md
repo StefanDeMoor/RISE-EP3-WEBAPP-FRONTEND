@@ -4,3 +4,5 @@ ctrl + shift + ù -> om een terminal open te doen
 
 * Start van een react project
     -> commando : npx create-react-app homecalc --template typescript
+
+shift + alt + f : is om code mooi te maken/formatten
