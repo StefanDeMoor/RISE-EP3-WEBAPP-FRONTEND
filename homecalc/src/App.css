@@ -23,3 +23,36 @@
   text-align: center;
   flex-direction: column;
 }
+
+.main {
+  display: flex;
+  height: calc(100vh - 60px); /* ruimte onder de topbar */
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #25466C; /* zelfde kleur als topbar */
+  color: white;
+  box-sizing: border-box;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 15px;
+  cursor: pointer;
+}
+
+.sidebar ul:hover {
+  list-style: none;
+}
+
+.sidebar li.active {
+  background-color: white;
+  color: #282c34;
+  font-weight: bold;
+}

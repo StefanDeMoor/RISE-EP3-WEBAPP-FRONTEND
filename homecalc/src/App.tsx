@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [activeItem, setActiveItem] = useState('Create');
+
+  const menuItems = ['Create', 'Customers', 'Products', 'Sales'];
+
   return (
     <div>
       <div className="topbar">
@@ -11,14 +15,20 @@ function App() {
       <div className="main">
         <div className="sidebar">
           <ul>
-            <li>Dashboard</li>
-            <li>Instellingen</li>
-            <li>Over</li>
+            {menuItems.map((item) => (
+              <li
+                key={item}
+                className={activeItem === item ? 'active' : ''}
+                onClick={() => setActiveItem(item)}
+              >
+                {item}
+              </li>
+            ))}
           </ul>
         </div>
 
         <div className="content">
-          <p>Welkom bij HomeCalc 🎉</p>
+
         </div>
       </div>
     </div>
