@@ -1,22 +1,41 @@
 import React, { useState } from 'react';
 import './App.css';
 
-function App() {
-  const [activeItem, setActiveItem] = useState('Create');
-  const [activeSubItem, setActiveSubItem] = useState('Overview');
+type CreateDataType = {
+  Overview: string[];
+  Test: string[];
+  Saving: string[];
+};
 
-  const menuItems = ['Create', 'Customers', 'Products', 'Sales'];
+const App: React.FC = () => {
+  const [activeItem, setActiveItem] = useState<string>('Create');
+  const [activeSubItem, setActiveSubItem] = useState<string>('Overview');
 
-  // 👇 Toegevoegd: laat sub-sidebar alleen zien bij "Create"
+  const [createData, setCreateData] = useState<CreateDataType>({
+    Overview: [],
+    Test: [],
+    Saving: [],
+  });
+
+  const handleAddItem = (category: keyof CreateDataType) => {
+    setCreateData((prev) => ({
+      ...prev,
+      [category]: [...prev[category], `Nieuw item in ${category}`],
+    }));
+  };
+
+  const menuItems: string[] = ['Create', 'Customers', 'Products', 'Sales'];
   const subSidebarVisible = activeItem === 'Create';
 
   return (
     <div>
+      {/* Topbar */}
       <div className="topbar">
         <h1 className="logo">HomeCalc</h1>
       </div>
 
       <div className="main">
+        {/* Sidebar links */}
         <div className="sidebar">
           <ul>
             {menuItems.map((item) => (
@@ -35,10 +54,12 @@ function App() {
             <p>For yourself or for your business.</p>
           </div>
         </div>
+
+        {/* Sub-sidebar */}
         {subSidebarVisible && (
           <div className="sub-sidebar">
             <ul className="sub-sidebar-menu">
-              <li id='legeLi'>leeg</li>
+              <li className="empty-li"></li>
               {['Overview', 'Test', 'Saving'].map((item) => (
                 <li
                   key={item}
@@ -52,12 +73,33 @@ function App() {
           </div>
         )}
 
+        {/* Content */}
         <div className="content">
-          {/* Eventuele content die hoort bij selectie kan hier */}
+          {activeItem === 'Create' && (
+            <>
+              {createData[activeSubItem as keyof CreateDataType]?.length === 0 ? (
+                <div className="empty-message">
+                  <p>Nothing found in {activeSubItem}.</p>
+                  <button
+                    className="add-btn"
+                    onClick={() => handleAddItem(activeSubItem as keyof CreateDataType)}
+                  >
+                    Create
+                  </button>
+                </div>
+              ) : (
+                <ul>
+                  {createData[activeSubItem as keyof CreateDataType].map((entry, index) => (
+                    <li key={index}>{entry}</li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default App;

@@ -2,7 +2,6 @@
   width: 100%;
   height: 60px;
   background-color: rgba(217, 217, 217, 0.3);
-;
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -15,25 +14,15 @@
   margin: 0;
 }
 
-.content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 60px); /* rest van het scherm onder de topbar */
-  text-align: center;
-  flex-direction: column;
-}
-
 .main {
   display: flex;
-  height: calc(100vh - 60px); /* ruimte onder de topbar */
+  height: calc(100vh - 60px);
 }
 
 .sidebar {
   width: 200px;
-  background-color: #25466C; /* zelfde kleur als topbar */
+  background-color: #25466C;
   color: white;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -50,10 +39,6 @@
   cursor: pointer;
 }
 
-.sidebar ul:hover {
-  list-style: none;
-}
-
 .sidebar li.active {
   background-color: white;
   color: #282c34;
@@ -61,10 +46,9 @@
 }
 
 .sidebar-footer {
-  font-size: 10px; /* kleiner lettertype */
+  font-size: 10px;
   color: #D4AF37;
   line-height: 1.4;
-  margin-top: auto; /* zorgt dat hij onderaan staat */
   margin-bottom: 20px;
   text-align: center;
 }
@@ -73,41 +57,22 @@
   width: 200px;
   background-color: rgba(37, 70, 108, 0.8);
   color: white;
+  padding: 0; /* Verwijderd zodat wit over volle breedte gaat */
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
-
-
-
-.sub-sidebar h3 {
-  margin-top: 0;
-  font-size: 16px;
-}
-
-.sub-sidebar ul {
+.sub-sidebar-menu {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-
-.sub-sidebar li {
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.sub-sidebar-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0; 
 }
 
 .sub-sidebar-menu li {
   padding: 15px;
   cursor: pointer;
   transition: background-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .sub-sidebar-menu li.active {
@@ -116,9 +81,33 @@
   font-weight: bold;
 }
 
-#legeLi {
-  height: auto;
-  visibility: hidden;
+.empty-li {
+  height: 52px; /* Zelfde hoogte als de andere knoppen */
 }
 
 
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.empty-message {
+  text-align: center;
+}
+
+.add-btn {
+  background-color: #25466C;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin-top: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #1e3a59;
+}
