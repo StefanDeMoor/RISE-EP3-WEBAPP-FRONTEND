@@ -21,14 +21,12 @@ export default function App() {
   const [newCategoryName, setNewCategoryName] = useState("");
   const [newCategoryStart, setNewCategoryStart] = useState("");
 
-  // currentCategoryIndex voor tabs selectie
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState<number | null>(
     categories.length > 0 ? 0 : null
   );
 
   const [newItem, setNewItem] = useState({ name: "", amount: "", type: "income" });
 
-  // Editing state
   const [editingCategoryIndex, setEditingCategoryIndex] = useState<number | null>(null);
   const [editingItem, setEditingItem] = useState<{ catIndex: number; itemIndex: number } | null>(null);
 
@@ -40,7 +38,6 @@ export default function App() {
   const menuItems = ["Create", "Customers", "Products", "Sales"];
   const subSidebarVisible = activeItem === "Create";
 
-  // Zet currentCategoryIndex goed als categories veranderen
   useEffect(() => {
     if (categories.length === 0) {
       setCurrentCategoryIndex(null);
@@ -52,7 +49,6 @@ export default function App() {
     }
   }, [categories, currentCategoryIndex]);
 
-  // Category actions
   const addCategory = () => {
     if (!newCategoryName.trim() || !newCategoryStart) return;
     setCategories([
@@ -75,7 +71,6 @@ export default function App() {
     setEditingCategoryIndex(null);
   };
 
-  // Item actions
   const addItemToCategory = (index: number) => {
     if (!newItem.name.trim() || !newItem.amount) return;
     const updated = [...categories];
@@ -188,21 +183,13 @@ export default function App() {
 
               {categories.length > 1 ? (
                 <div>
-                  {/* Tabs */}
-                  <div className="tabs" style={{ marginBottom: 16 }}>
+                  {/* Verticaal gestapelde tabs */}
+                  <div className="tabs">
                     {categories.map((cat, idx) => (
                       <button
                         key={idx}
                         className={currentCategoryIndex === idx ? "active-tab" : ""}
                         onClick={() => setCurrentCategoryIndex(idx)}
-                        style={{
-                          marginRight: 8,
-                          padding: "6px 12px",
-                          cursor: "pointer",
-                          backgroundColor: currentCategoryIndex === idx ? "#ccc" : "#eee",
-                          border: "1px solid #999",
-                          borderBottom: currentCategoryIndex === idx ? "none" : "1px solid #999",
-                        }}
                       >
                         {cat.name}
                       </button>
@@ -432,6 +419,11 @@ export default function App() {
               )}
             </div>
           )}
+
+          {activeItem === "Create" && activeSubItem !== "Overview" && (
+            <h1>{activeSubItem}</h1>
+          )}
+          {activeItem !== "Create" && <h1>{activeItem}</h1>}
         </div>
       </div>
     </div>
