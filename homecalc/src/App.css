@@ -8,6 +8,11 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+body {
+  font-family: 'Montagu', sans-serif;
+}
+
+
 .logo {
   color:#D4AF37;
   font-size: 24px;
@@ -101,8 +106,23 @@
   font-weight: bold;
 }
 
+.sub-sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: solid 1px white;
+}
+
+.sub-sidebar-icon {
+  width: 25px;
+  height: 25px;
+}
+
+
 .empty-li {
-  height: 52px; /* Zelfde hoogte als de andere knoppen */
+  height: 52px; 
 }
 
 
@@ -117,6 +137,19 @@
 .empty-message {
   text-align: center;
 }
+
+.empty-message-title {
+  font-weight: bold;
+  font-size: 32px; 
+  margin-bottom: 10px;
+}
+
+.empty-message-subtitle {
+  font-weight: normal;
+  font-size: 14px; 
+  margin-bottom: 20px;
+}
+
 
 .add-btn {
   background-color: #25466C;

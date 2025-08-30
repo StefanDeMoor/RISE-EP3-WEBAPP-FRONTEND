@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type ContentProps = {
   activeSubItem: string;
@@ -13,11 +13,26 @@ export const Content: React.FC<ContentProps> = ({
 }) => {
   const items = createData[activeSubItem] || [];
 
+  const icons: Record<string, string> = {
+    Overview: "/images/overview100blue.png",
+    Saving: "/images/saving100blue.png",
+  };
+
   if (items.length === 0) {
     return (
       <div className="empty-message">
-        <img src="/images/overview100blue.png" alt="overview" />
-        <p>Start creating {activeSubItem.toLocaleLowerCase()}s by clicking on “Create {activeSubItem}”.</p>
+        <img
+          src={icons[activeSubItem]}
+          alt={activeSubItem}
+          className="content-icon"
+        />
+        <p className="empty-message-title">
+          You don't have any {activeSubItem.toLocaleLowerCase()}s yet
+        </p>
+        <p className="empty-message-subtitle">
+          Start creating {activeSubItem.toLocaleLowerCase()}s by clicking on
+          “Create {activeSubItem}”.
+        </p>
         <button className="add-btn" onClick={() => onAdd(activeSubItem)}>
           Create {activeSubItem}
         </button>
