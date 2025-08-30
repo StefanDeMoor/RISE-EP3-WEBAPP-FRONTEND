@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { CreateOverviewDialog } from "./overview/CreateOverviewDialog";
+import { OverviewPanel } from "./overview/OverviewPanel";
 
-type ContentProps = {
+type EmptyMainSubProps = {
   activeSubItem: string;
-  createData: Record<string, string[]>;
-  onAdd: (category: string, itemName: string) => void;
+  createData: Record<string, { title: string; amount: number }[]>;
+  onAdd: (category: string, title: string, amount: number) => void;
 };
 
-export const Content: React.FC<ContentProps> = ({ activeSubItem, createData, onAdd }) => {
+export const EmptyMainSub: React.FC<EmptyMainSubProps> = ({ activeSubItem, createData, onAdd }) => {
   const items = createData[activeSubItem] || [];
   const icons: Record<string, string> = {
     Overview: "/images/overview100blue.png",
@@ -19,7 +20,7 @@ export const Content: React.FC<ContentProps> = ({ activeSubItem, createData, onA
   const handleCreateClick = () => setIsDialogOpen(true);
 
   const handleCreate = (title: string, amount: number) => {
-    onAdd(activeSubItem, `${title} - ${amount}`);
+    onAdd(activeSubItem, title, amount);
     setIsDialogOpen(false);
   };
 
@@ -48,11 +49,11 @@ export const Content: React.FC<ContentProps> = ({ activeSubItem, createData, onA
       )}
 
       {items.length > 0 && (
-        <ul>
+        <div>
           {items.map((entry, index) => (
-            <li key={index}>{entry}</li>
+            <OverviewPanel key={index} item={entry} />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

@@ -3,7 +3,7 @@ import './App.css';
 import { Topbar } from './components/Topbar';
 import { Sidebar } from './components/Sidebar';
 import { SubSidebar } from './components/SubSidebar';
-import { Content } from './components/Content';
+import { EmptyMainSub } from './components/EmptyMainSub';
 import { useMenu } from './hooks/useMenu';
 import { useCreateData } from './hooks/useCreateData';
 
@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const menuItems = ['Create', 'Customers', 'Products', 'Sales'];
 
   const { activeItem, setActiveItem } = useMenu('Create');
-  const { activeSubItem, setActiveSubItem, createData, handleAddItem } = useCreateData();
+  const { activeSubItem, setActiveSubItem, createData, addOverviewItem } = useCreateData();
 
   return (
     <div>
@@ -23,16 +23,16 @@ const App: React.FC = () => {
           <SubSidebar
             items={['Overview', 'Saving']}
             activeItem={activeSubItem}
-            onSelect={item => setActiveSubItem(item as any)}
+            onSelect={(item) => setActiveSubItem(item as any)}
           />
         )}
 
         <div className="content">
           {activeItem === 'Create' && (
-            <Content
+            <EmptyMainSub
               activeSubItem={activeSubItem}
               createData={createData}
-              onAdd={category => handleAddItem(category as any)}
+              onAdd={(category, title, amount) => addOverviewItem(category as any, title, amount)}
             />
           )}
         </div>
