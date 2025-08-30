@@ -12,7 +12,7 @@ type OverviewPanelProps = {
 };
 
 export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
-  const [expanded, setExpanded] = useState(true); // default open
+  const [expanded, setExpanded] = useState(true); 
 
   return (
     <div className="overview-panel">
@@ -27,6 +27,7 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
         <div className="overview-content">
           <div className="overview-table">
             <div className="overview-table-header">
+              <div></div>
               <div>Name</div>
               <div>Date</div>
               <div>Amount</div>
@@ -37,16 +38,14 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
             </div>
 
             <div className="overview-table-body">
-              {/* Placeholder empty row */}
-              <div className="overview-table-row empty-row">
+              <div className="overview-table-row">
                 <div></div>
                 <div></div>
                 <div></div>
               </div>
 
-              {/* Center message */}
               <div className="overview-empty-message">
-                <img src="/images/calculatorIcon.png" alt="icon" />
+                <img src="/images/calculator100blue.png" alt="icon" />
                 <p className="overview-empty-title">Start Calculating!</p>
               </div>
             </div>
@@ -57,7 +56,8 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
             </div>
           </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
