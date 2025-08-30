@@ -8,6 +8,11 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+body {
+  font-family: 'Montagu', sans-serif;
+}
+
+
 .logo {
   color:#D4AF37;
   font-size: 24px;
@@ -26,6 +31,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border: solid 1px white;
+  box-shadow: 4px 0 4px -2px rgba(0, 0, 0, 0.4);
 }
 
 .sidebar ul {
@@ -37,11 +44,12 @@
 .sidebar li {
   padding: 15px;
   cursor: pointer;
+  border-bottom: solid 1px white;
 }
 
 .sidebar li.active {
   background-color: white;
-  color: #282c34;
+  color: #25466C;
   font-weight: bold;
 }
 
@@ -53,12 +61,29 @@
   text-align: center;
 }
 
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: solid 1px white;
+  user-select: none;
+}
+
+.sidebar-icon {
+  width: 25px;
+  height: 25px;
+}
+
 .sub-sidebar {
   width: 200px;
-  background-color: rgba(37, 70, 108, 0.8);
+  background-color: #25466C;
   color: white;
-  padding: 0; /* Verwijderd zodat wit over volle breedte gaat */
+  padding: 0; 
   box-sizing: border-box;
+  border: solid 1px white;
+  box-shadow: 4px 0 4px -2px rgba(0, 0, 0, 0.4);
 }
 
 .sub-sidebar-menu {
@@ -73,6 +98,8 @@
   transition: background-color 0.2s;
   width: 100%;
   box-sizing: border-box;
+  border-bottom: solid 1px white;
+  user-select: none;
 }
 
 .sub-sidebar-menu li.active {
@@ -81,8 +108,23 @@
   font-weight: bold;
 }
 
+.sub-sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: solid 1px white;
+}
+
+.sub-sidebar-icon {
+  width: 25px;
+  height: 25px;
+}
+
+
 .empty-li {
-  height: 52px; /* Zelfde hoogte als de andere knoppen */
+  height: 52px; 
 }
 
 
@@ -98,6 +140,19 @@
   text-align: center;
 }
 
+.empty-message-title {
+  font-weight: bold;
+  font-size: 32px; 
+  margin-bottom: 10px;
+}
+
+.empty-message-subtitle {
+  font-weight: normal;
+  font-size: 14px; 
+  margin-bottom: 20px;
+}
+
+
 .add-btn {
   background-color: #25466C;
   color: white;
@@ -106,6 +161,7 @@
   margin-top: 10px;
   border-radius: 8px;
   cursor: pointer;
+  user-select: none;
 }
 
 .add-btn:hover {
