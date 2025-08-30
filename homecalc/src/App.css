@@ -68,6 +68,7 @@ body {
   padding: 15px;
   cursor: pointer;
   border-bottom: solid 1px white;
+  user-select: none;
 }
 
 .sidebar-icon {
@@ -98,6 +99,7 @@ body {
   width: 100%;
   box-sizing: border-box;
   border-bottom: solid 1px white;
+  user-select: none;
 }
 
 .sub-sidebar-menu li.active {
@@ -159,6 +161,7 @@ body {
   margin-top: 10px;
   border-radius: 8px;
   cursor: pointer;
+  user-select: none;
 }
 
 .add-btn:hover {
