@@ -1,0 +1,77 @@
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.dialog {
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  width: 400px;
+  overflow: hidden;
+}
+
+.dialog-header {
+  background-color: #003366;
+  color: white;
+  padding: 10px 15px;
+}
+
+.dialog-body {
+  padding: 15px;
+}
+
+.dialog-fields {
+  padding: 20px 10px;
+}
+
+.dialog-field {
+  display: flex;
+  align-items: center;   
+  margin-bottom: 12px;
+}
+
+.dialog-field label {
+  font-weight: bold;
+  width: 80px;           
+  margin-right: 15px;  
+}
+
+.dialog-field input {
+  width: 220px;      
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between; 
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 6px 16px;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn.cancel {
+  background-color: #45454A;
+  color: white;
+}
+
+.btn.create {
+  background-color: #A8C686;
+  color: black;
+}
