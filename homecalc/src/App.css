@@ -131,9 +131,15 @@ body {
 .content {
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.empty-message-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .empty-message {
