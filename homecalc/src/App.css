@@ -152,6 +152,9 @@ body {
   margin-bottom: 20px;
 }
 
+.empty-icon {
+  user-select: none;
+}
 
 .add-btn {
   background-color: #25466C;
