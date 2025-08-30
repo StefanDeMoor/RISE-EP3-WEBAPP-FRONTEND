@@ -16,9 +16,10 @@ export const Content: React.FC<ContentProps> = ({
   if (items.length === 0) {
     return (
       <div className="empty-message">
-        <p>Nothing found in {activeSubItem}.</p>
+        <img src="/images/overview100blue.png" alt="overview" />
+        <p>Start creating {activeSubItem.toLocaleLowerCase()}s by clicking on “Create {activeSubItem}”.</p>
         <button className="add-btn" onClick={() => onAdd(activeSubItem)}>
-          Create Overview
+          Create {activeSubItem}
         </button>
       </div>
     );
