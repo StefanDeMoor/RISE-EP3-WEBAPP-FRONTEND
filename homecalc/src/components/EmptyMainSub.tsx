@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CreateOverviewDialog } from "./overview/CreateOverviewDialog";
+import '../styling/EmptyMainSub.css'
 
 type EmptyMainSubProps = {
   activeSubItem: string;
