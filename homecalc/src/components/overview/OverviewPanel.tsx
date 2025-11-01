@@ -13,6 +13,22 @@ type OverviewPanelProps = {
 
 export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
   const [expanded, setExpanded] = useState(true); 
+  const [rows, setRows] = useState<{ name: string, date: string, amount: number | ''}[]>([]);
+
+  const handleAddRow = () => {
+    setRows([...rows, { name: "", date: "", amount:""}])
+  };
+
+  const handleRowChange = (index: number, field: string, value: string) => {
+    const updateRows = [...rows];
+    updateRows[index] = { ...updateRows[index], [field]: value};
+    setRows(updateRows);
+  }
+
+  const totalAmount = rows.reduce(
+    (acc, row) => acc + (Number(row.amount) || 0),
+    0
+  );
 
   return (
     <div className="overview-panel">
@@ -33,26 +49,59 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
               <div>Amount</div>
               <div className="overview-table-controls">
                 <button className="icon-button">–</button>
-                <button className="icon-button">+</button>
+                <button className="icon-button" onClick={handleAddRow}>+</button>
               </div>
             </div>
 
             <div className="overview-table-body">
-              <div className="overview-table-row">
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-
-              <div className="overview-empty-message">
-                <img src="/images/calculator100blue.png" alt="icon" />
-                <p className="overview-empty-title">Start Calculating!</p>
-              </div>
+              {rows.length > 0 ? (
+                rows.map((row, index) => (
+                  <div key={index} className="overview-table-row">
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        value={row.name}
+                        onChange={(e) =>
+                          handleRowChange(index, "name", e.target.value)
+                        }
+                        className="overview-input"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="date"
+                        value={row.date}
+                        onChange={(e) =>
+                          handleRowChange(index, "date", e.target.value)
+                        }
+                        className="overview-input"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="number"
+                        placeholder="Amount"
+                        value={row.amount}
+                        onChange={(e) =>
+                          handleRowChange(index, "amount", e.target.value)
+                        }
+                        className="overview-input"
+                      />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="overview-empty-message">
+                  <img src="/images/calculator100blue.png" alt="icon" />
+                  <p className="overview-empty-title">Start Calculating!</p>
+                </div>
+              )}
             </div>
 
             <div className="overview-table-footer">
               <div className="footer-label">TOTAL</div>
-              <div className="footer-amount">€{item.amount.toFixed(2)}</div>
+              <div className="footer-amount">€{totalAmount.toFixed(2)}</div>
             </div>
           </div>
         </div>

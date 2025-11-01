@@ -4,8 +4,8 @@ import "../../styling/OverviewHeader.css";
 type OverviewHeaderProps = {
   title: string;
   latestAmount?: number;
-  expanded?: boolean; // extra prop om icoon te kiezen
-  onToggle?: () => void; // optioneel: klikbare toggle
+  expanded?: boolean; 
+  onToggle?: () => void; 
 };
 
 export const OverviewHeader: React.FC<OverviewHeaderProps> = ({
