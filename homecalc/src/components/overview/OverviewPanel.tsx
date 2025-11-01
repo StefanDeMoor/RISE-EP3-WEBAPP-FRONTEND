@@ -11,12 +11,19 @@ type OverviewPanelProps = {
   item: OverviewItem;
 };
 
+type Row = {
+  name: string,
+  date: string,
+  amount: number |'',
+  sign: -1 | 1
+}
+
 export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
   const [expanded, setExpanded] = useState(true); 
-  const [rows, setRows] = useState<{ name: string, date: string, amount: number | ''}[]>([]);
+  const [rows, setRows] = useState<Row[]>([]);
 
-  const handleAddRow = () => {
-    setRows([...rows, { name: "", date: "", amount:""}])
+  const handleAddRow = (sign: -1 | 1 ) => {
+    setRows([...rows, { name: "", date: "", amount: "", sign }])
   };
 
   const handleRowChange = (index: number, field: string, value: string) => {
@@ -26,7 +33,7 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
   }
 
   const totalAmount = rows.reduce(
-    (acc, row) => acc + (Number(row.amount) || 0),
+    (acc, row) => acc + (row.sign * (Number(row.amount) || 0)),
     item.amount
   );
 
@@ -48,8 +55,8 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
               <div>Date</div>
               <div>Amount</div>
               <div className="overview-table-controls">
-                <button className="icon-button">–</button>
-                <button className="icon-button" onClick={handleAddRow}>+</button>
+                <button className="icon-button" onClick={() => handleAddRow(-1)}>–</button>
+                <button className="icon-button" onClick={() => handleAddRow(1)}>+</button>
               </div>
             </div>
 
@@ -78,7 +85,10 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
                         className="overview-input"
                       />
                     </div>
-                    <div>
+                    <div style={{ display: "flex", alignItems: "center"}}>
+                      <span style={{ marginRight: "4px", fontWeight: "bold", marginLeft: "4px"}}>
+                        { row.sign === -1 ? "-" : "+" }
+                      </span>
                       <input
                         type="number"
                         placeholder="Amount"
