@@ -27,7 +27,7 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
 
   const totalAmount = rows.reduce(
     (acc, row) => acc + (Number(row.amount) || 0),
-    0
+    item.amount
   );
 
   return (
