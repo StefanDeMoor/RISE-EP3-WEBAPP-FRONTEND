@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { OverviewHeader } from "./OverviewHeader";
+import 'font-awesome/css/font-awesome.min.css';
 import "../../styling/overview/OverviewPanel.css";
 
 type OverviewItem = {
