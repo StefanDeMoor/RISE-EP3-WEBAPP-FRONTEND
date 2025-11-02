@@ -12,28 +12,28 @@ type OverviewPanelProps = {
 };
 
 type Row = {
-  name: string,
-  date: string,
-  amount: number |'',
-  sign: -1 | 1
-}
+  name: string;
+  date: string;
+  amount: number | "";
+  sign: -1 | 1;
+};
 
 export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
-  const [expanded, setExpanded] = useState(true); 
+  const [expanded, setExpanded] = useState(true);
   const [rows, setRows] = useState<Row[]>([]);
 
-  const handleAddRow = (sign: -1 | 1 ) => {
-    setRows([...rows, { name: "", date: "", amount: "", sign }])
+  const handleAddRow = (sign: -1 | 1) => {
+    setRows([...rows, { name: "", date: "", amount: "", sign }]);
   };
 
   const handleRowChange = (index: number, field: string, value: string) => {
     const updateRows = [...rows];
-    updateRows[index] = { ...updateRows[index], [field]: value};
+    updateRows[index] = { ...updateRows[index], [field]: value };
     setRows(updateRows);
-  }
+  };
 
   const totalAmount = rows.reduce(
-    (acc, row) => acc + (row.sign * (Number(row.amount) || 0)),
+    (acc, row) => acc + row.sign * (Number(row.amount) || 0),
     item.amount
   );
 
@@ -43,7 +43,7 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
         title={item.title}
         latestAmount={item.amount}
         expanded={expanded}
-        onToggle={() => setExpanded(prev => !prev)}
+        onToggle={() => setExpanded((prev) => !prev)}
       />
 
       {expanded && (
@@ -55,8 +55,15 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
               <div>Date</div>
               <div>Amount</div>
               <div className="overview-table-controls">
-                <button className="icon-button" onClick={() => handleAddRow(-1)}>–</button>
-                <button className="icon-button" onClick={() => handleAddRow(1)}>+</button>
+                <button
+                  className="icon-button"
+                  onClick={() => handleAddRow(-1)}
+                >
+                  –
+                </button>
+                <button className="icon-button" onClick={() => handleAddRow(1)}>
+                  +
+                </button>
               </div>
             </div>
 
@@ -85,19 +92,30 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
                         className="overview-input"
                       />
                     </div>
-                    <div style={{ display: "flex", alignItems: "center"}}>
-                      <span style={{ marginRight: "4px", fontWeight: "bold", marginLeft: "4px"}}>
-                        { row.sign === -1 ? "-" : "+" }
-                      </span>
-                      <input
-                        type="number"
-                        placeholder="Amount"
-                        value={row.amount}
-                        onChange={(e) =>
-                          handleRowChange(index, "amount", e.target.value)
-                        }
-                        className="overview-input"
-                      />
+                    <div className="overview-amount-cell">
+                      <div className="overview-amount-left">
+                        <span className="overview-amount-sign">
+                          {row.sign === -1 ? "-" : "+"}
+                        </span>
+                        <input
+                          type="number"
+                          placeholder="Amount"
+                          value={row.amount}
+                          onChange={(e) =>
+                            handleRowChange(index, "amount", e.target.value)
+                          }
+                          className="overview-input"
+                        />
+                      </div>
+
+                      <div className="overview-amount-actions">
+                          <button className="icon-button edit-btn">
+                            <i className="fa fa-pencil"></i>
+                          </button>
+                          <button className="icon-button delete-btn">
+                            <i className="fa fa-trash"></i>
+                          </button>
+                      </div>
                     </div>
                   </div>
                 ))
@@ -115,8 +133,7 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
             </div>
           </div>
         </div>
-      )
-      }
-    </div >
+      )}
+    </div>
   );
 };
