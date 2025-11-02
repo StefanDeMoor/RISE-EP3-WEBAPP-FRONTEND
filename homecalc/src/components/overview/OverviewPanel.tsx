@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { OverviewHeader } from "./OverviewHeader";
 import "font-awesome/css/font-awesome.min.css";
 import "../../styling/overview/OverviewPanel.css";
@@ -24,12 +24,23 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
   const [expanded, setExpanded] = useState(true);
   const [rows, setRows] = useState<Row[]>([]);
 
+  const inputRefs = useRef<(HTMLElement | null)[]>([]);
+  const [focusIndex, setFocusIndex] = useState<number | null>(null);
+
   const handleAddRow = (sign: -1 | 1) => {
     setRows([
       ...rows,
       { name: "", date: "", amount: "", sign, isEditing: true },
     ]);
+    setFocusIndex(rows.length);
   };
+
+  useEffect(() => {
+    if (focusIndex !== null && inputRefs.current[focusIndex]) {
+      inputRefs.current[focusIndex]?.focus();
+      setFocusIndex(null);
+    }
+  }, [focusIndex]);
 
   const handleRowChange = (index: number, field: string, value: string) => {
     const updateRows = [...rows];
@@ -47,6 +58,7 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
     const updatedRows = [...rows];
     updatedRows[index].isEditing = true;
     setRows(updatedRows);
+    setFocusIndex(index);
   };
 
   const handleDiscardRow = (index: number) => {
@@ -117,6 +129,9 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
                         }
                         className="overview-input"
                         readOnly={!row.isEditing}
+                        ref={(el) => {
+                          inputRefs.current[index] = el;
+                        }}
                       />
                     </div>
                     <div>
