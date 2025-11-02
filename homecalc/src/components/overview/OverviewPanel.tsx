@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { OverviewHeader } from "./OverviewHeader";
-import 'font-awesome/css/font-awesome.min.css';
+import "font-awesome/css/font-awesome.min.css";
 import "../../styling/overview/OverviewPanel.css";
 
 type OverviewItem = {
@@ -17,6 +17,7 @@ type Row = {
   date: string;
   amount: number | "";
   sign: -1 | 1;
+  isEditing: boolean;
 };
 
 export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
@@ -24,13 +25,47 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
   const [rows, setRows] = useState<Row[]>([]);
 
   const handleAddRow = (sign: -1 | 1) => {
-    setRows([...rows, { name: "", date: "", amount: "", sign }]);
+    setRows([
+      ...rows,
+      { name: "", date: "", amount: "", sign, isEditing: true },
+    ]);
   };
 
   const handleRowChange = (index: number, field: string, value: string) => {
     const updateRows = [...rows];
     updateRows[index] = { ...updateRows[index], [field]: value };
     setRows(updateRows);
+  };
+
+  const handleSaveRow = (index: number) => {
+    const updateRows = [...rows];
+    updateRows[index].isEditing = false;
+    setRows(updateRows);
+  };
+
+  const handleEditRow = (index: number) => {
+    const updatedRows = [...rows];
+    updatedRows[index].isEditing = true;
+    setRows(updatedRows);
+  };
+
+  const handleDiscardRow = (index: number) => {
+    const updatedRows = [...rows];
+    if (
+      !updatedRows[index].name &&
+      !updatedRows[index].amount &&
+      !updatedRows[index].date
+    ) {
+      updatedRows.splice(index, 1);
+    } else {
+      updatedRows[index].isEditing = false;
+    }
+    setRows(updatedRows);
+  };
+
+  const handleDeleteRow = (index: number) => {
+    const updatedRows = rows.filter((_, i) => i !== index);
+    setRows(updatedRows);
   };
 
   const totalAmount = rows.reduce(
@@ -81,6 +116,7 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
                           handleRowChange(index, "name", e.target.value)
                         }
                         className="overview-input"
+                        readOnly={!row.isEditing}
                       />
                     </div>
                     <div>
@@ -91,6 +127,7 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
                           handleRowChange(index, "date", e.target.value)
                         }
                         className="overview-input"
+                        readOnly={!row.isEditing}
                       />
                     </div>
                     <div className="overview-amount-cell">
@@ -106,16 +143,46 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
                             handleRowChange(index, "amount", e.target.value)
                           }
                           className="overview-input"
+                          readOnly={!row.isEditing}
                         />
                       </div>
 
                       <div className="overview-amount-actions">
-                          <button className="icon-button edit-btn">
-                            <i className="fa fa-pencil"></i>
-                          </button>
-                          <button className="icon-button delete-btn">
-                            <i className="fa fa-trash"></i>
-                          </button>
+                        {row.isEditing ? (
+                          <>
+                            <button
+                              className="icon-button save-btn"
+                              title="Save"
+                              onClick={() => handleSaveRow(index)}
+                            >
+                              <i className="fa fa-save"></i>
+                            </button>
+                            <button
+                              className="icon-button discard-btn"
+                              title="Undo"
+                              onClick={() => handleDiscardRow(index)}
+                            >
+                              <i className="fa fa-rotate-left"></i>
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              className="icon-button edit-btn"
+                              title="Edit"
+                              onClick={() => handleEditRow(index)}
+                            >
+                              <i className="fa fa-pencil"></i>
+                            </button>
+                            <button
+                              className="icon-button delete-btn"
+                              title="Delete"
+                              onClick={() => handleDeleteRow(index)}
+                            >
+                              <i className="fa fa-trash"></i>
+                            </button>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
