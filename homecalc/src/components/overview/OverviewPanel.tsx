@@ -32,13 +32,17 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
 
   useEffect(() => {
     if (amounts.length > 0) {
-      const mapped: Row[] = amounts.map(a => ({
-        name: a.name,
-        date: a.date,
-        amount: a.amount,
-        sign: (a.sign === -1 ? -1 : 1) as -1 | 1,
-        isEditing: false
-      }));
+      const mapped: Row[] = amounts.map(a => {
+        const sign = a.amount < 0 ? -1 : 1;
+        const absAmount = Math.abs(a.amount);
+        return {
+          name: a.name,
+          date: a.date,
+          amount: absAmount,
+          sign: sign as -1 | 1,
+          isEditing: false,
+        };
+      });
       setRows(mapped);
     }
   }, [amounts]);
