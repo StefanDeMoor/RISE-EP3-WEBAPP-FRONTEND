@@ -21,7 +21,11 @@ export const OverviewPage: React.FC = () => {
       {overviews.map((o) => (
         <OverviewPanel
           key={o.id}
-          item={{ title: o.title, amount: o.totalIncome ?? 0 }}
+          item={{
+            id: o.id,
+            title: o.title,
+            amount: o.totalIncome ?? 0,
+          }}
         />
       ))}
     </div>

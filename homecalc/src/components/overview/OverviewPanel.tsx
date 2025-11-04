@@ -2,8 +2,10 @@ import React, { useRef, useState, useEffect } from "react";
 import { OverviewHeader } from "./OverviewHeader";
 import "font-awesome/css/font-awesome.min.css";
 import "../../styling/overview/OverviewPanel.css";
+import { useOverviewDetails } from "../../hooks/overview/useOverviewDetails";
 
 type OverviewItem = {
+  id: number;
   title: string;
   amount: number;
 };
@@ -25,6 +27,21 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
   const [rows, setRows] = useState<Row[]>([]);
   const inputRefs = useRef<(HTMLElement | null)[]>([]);
   const [focusIndex, setFocusIndex] = useState<number | null>(null);
+
+  const { amounts, loading, error } = useOverviewDetails(item.id);
+
+  useEffect(() => {
+    if (amounts.length > 0) {
+      const mapped: Row[] = amounts.map(a => ({
+        name: a.name,
+        date: a.date,
+        amount: a.amount,
+        sign: (a.sign === -1 ? -1 : 1) as -1 | 1,
+        isEditing: false
+      }));
+      setRows(mapped);
+    }
+  }, [amounts]);
 
   const handleAddRow = (sign: -1 | 1) => {
     setRows([...rows, { name: "", date: "", amount: "", sign, isEditing: true }]);
@@ -100,7 +117,11 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
             </div>
 
             <div className="overview-table-body">
-              {rows.length > 0 ? (
+              {loading ? (
+                <div className="overview-empty-message"><p>Loading data...</p></div>
+              ) : error ? (
+                <div className="overview-empty-message"><p style={{ color: "red" }}>Error: {error}</p></div>
+              ) : rows.length > 0 ? (
                 rows.map((row, index) => (
                   <div key={index} className="overview-table-row">
                     <div>
