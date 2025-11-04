@@ -23,15 +23,11 @@ type Row = {
 export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
   const [expanded, setExpanded] = useState(true);
   const [rows, setRows] = useState<Row[]>([]);
-
   const inputRefs = useRef<(HTMLElement | null)[]>([]);
   const [focusIndex, setFocusIndex] = useState<number | null>(null);
 
   const handleAddRow = (sign: -1 | 1) => {
-    setRows([
-      ...rows,
-      { name: "", date: "", amount: "", sign, isEditing: true },
-    ]);
+    setRows([...rows, { name: "", date: "", amount: "", sign, isEditing: true }]);
     setFocusIndex(rows.length);
   };
 
@@ -63,11 +59,7 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
 
   const handleDiscardRow = (index: number) => {
     const updatedRows = [...rows];
-    if (
-      !updatedRows[index].name &&
-      !updatedRows[index].amount &&
-      !updatedRows[index].date
-    ) {
+    if (!updatedRows[index].name && !updatedRows[index].amount && !updatedRows[index].date) {
       updatedRows.splice(index, 1);
     } else {
       updatedRows[index].isEditing = false;
@@ -86,14 +78,13 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
   );
 
   return (
-    <div className="overview-panel">
+    <div className={`overview-panel ${expanded ? "expanded" : "collapsed"}`}>
       <OverviewHeader
         title={item.title}
         latestAmount={item.amount}
         expanded={expanded}
-        onToggle={() => setExpanded((prev) => !prev)}
+        onToggle={() => setExpanded(prev => !prev)}
       />
-
       {expanded && (
         <div className="overview-content">
           <div className="overview-table">
@@ -103,15 +94,8 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
               <div>Date</div>
               <div>Amount</div>
               <div className="overview-table-controls">
-                <button
-                  className="icon-button"
-                  onClick={() => handleAddRow(-1)}
-                >
-                  –
-                </button>
-                <button className="icon-button" onClick={() => handleAddRow(1)}>
-                  +
-                </button>
+                <button className="icon-button" onClick={() => handleAddRow(-1)}>–</button>
+                <button className="icon-button" onClick={() => handleAddRow(1)}>+</button>
               </div>
             </div>
 
@@ -124,76 +108,49 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
                         type="text"
                         placeholder="Name"
                         value={row.name}
-                        onChange={(e) =>
-                          handleRowChange(index, "name", e.target.value)
-                        }
+                        onChange={(e) => handleRowChange(index, "name", e.target.value)}
                         className="overview-input"
                         readOnly={!row.isEditing}
-                        ref={(el) => {
-                          inputRefs.current[index] = el;
-                        }}
+                        ref={el => { inputRefs.current[index] = el; }}
                       />
                     </div>
                     <div>
                       <input
                         type="date"
                         value={row.date}
-                        onChange={(e) =>
-                          handleRowChange(index, "date", e.target.value)
-                        }
+                        onChange={(e) => handleRowChange(index, "date", e.target.value)}
                         className="overview-input"
                         readOnly={!row.isEditing}
                       />
                     </div>
                     <div className="overview-amount-cell">
                       <div className="overview-amount-left">
-                        <span className="overview-amount-sign">
-                          {row.sign === -1 ? "-" : "+"}
-                        </span>
+                        <span className="overview-amount-sign">{row.sign === -1 ? "-" : "+"}</span>
                         <input
                           type="number"
                           placeholder="Amount"
                           value={row.amount}
-                          onChange={(e) =>
-                            handleRowChange(index, "amount", e.target.value)
-                          }
+                          onChange={(e) => handleRowChange(index, "amount", e.target.value)}
                           className="overview-input"
                           readOnly={!row.isEditing}
                         />
                       </div>
-
                       <div className="overview-amount-actions">
                         {row.isEditing ? (
                           <>
-                            <button
-                              className="icon-button save-btn"
-                              title="Save"
-                              onClick={() => handleSaveRow(index)}
-                            >
+                            <button className="icon-button save-btn" title="Save" onClick={() => handleSaveRow(index)}>
                               <i className="fa fa-save"></i>
                             </button>
-                            <button
-                              className="icon-button discard-btn"
-                              title="Undo"
-                              onClick={() => handleDiscardRow(index)}
-                            >
+                            <button className="icon-button discard-btn" title="Undo" onClick={() => handleDiscardRow(index)}>
                               <i className="fa fa-rotate-left"></i>
                             </button>
                           </>
                         ) : (
                           <>
-                            <button
-                              className="icon-button edit-btn"
-                              title="Edit"
-                              onClick={() => handleEditRow(index)}
-                            >
+                            <button className="icon-button edit-btn" title="Edit" onClick={() => handleEditRow(index)}>
                               <i className="fa fa-pencil"></i>
                             </button>
-                            <button
-                              className="icon-button delete-btn"
-                              title="Delete"
-                              onClick={() => handleDeleteRow(index)}
-                            >
+                            <button className="icon-button delete-btn" title="Delete" onClick={() => handleDeleteRow(index)}>
                               <i className="fa fa-trash"></i>
                             </button>
                           </>
