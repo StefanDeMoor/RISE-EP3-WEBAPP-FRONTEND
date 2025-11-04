@@ -1,8 +1,13 @@
 import { useState } from 'react';
 
+export type OverviewItem = {
+  title: string;
+  amount: number;
+};
+
 type CreateDataType = {
-  Overview: string[];
-  Saving: string[];
+  Overview: OverviewItem[];
+  Saving: OverviewItem[];
 };
 
 export const useCreateData = () => {
@@ -12,13 +17,12 @@ export const useCreateData = () => {
     Saving: [],
   });
 
-  const handleAddItem = (category: keyof CreateDataType) => {
+  const addOverviewItem = (category: keyof CreateDataType, title: string, amount: number) => {
     setCreateData(prev => ({
       ...prev,
-      [category]: [...prev[category], `Nieuw item in ${category}`],
+      [category]: [...prev[category], { title, amount }],
     }));
   };
 
-  return { activeSubItem, setActiveSubItem, createData, handleAddItem };
+  return { activeSubItem, setActiveSubItem, createData, addOverviewItem };
 };
-

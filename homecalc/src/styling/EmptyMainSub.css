@@ -1,0 +1,41 @@
+.empty-message-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-message {
+  text-align: center;
+}
+
+.empty-message-title {
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.empty-message-subtitle {
+  font-weight: normal;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.empty-icon {
+  user-select: none;
+}
+
+.add-btn {
+  background-color: #25466C;
+  color: white;
+  border: none;
+  padding: 14px;
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.add-btn:hover {
+  background-color: #1e3a59;
+}

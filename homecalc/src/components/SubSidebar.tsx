@@ -24,7 +24,7 @@ export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSel
         {items.map(item => {
           const iconSrc = activeItem === item ? activeIcons[item] : defaultIcons[item];
           const itemStyle = {
-            backgroundColor: activeItem === item ? 'white' : '#25466C', // inactive blue
+            backgroundColor: activeItem === item ? 'white' : '#25466C', 
             color: activeItem === item ? '#25466C' : 'white',
             fontWeight: activeItem === item ? 'bold' : 'normal',
           };

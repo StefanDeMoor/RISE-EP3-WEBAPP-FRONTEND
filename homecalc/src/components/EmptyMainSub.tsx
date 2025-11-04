@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { CreateOverviewDialog } from "./overview/CreateOverviewDialog";
+import '../styling/EmptyMainSub.css'
 
-type ContentProps = {
+type EmptyMainSubProps = {
   activeSubItem: string;
-  createData: Record<string, string[]>;
-  onAdd: (category: string, itemName: string) => void;
+  createData: Record<string, { title: string; amount: number }[]>;
+  onAdd: (category: string, title: string, amount: number) => void;
 };
 
-export const Content: React.FC<ContentProps> = ({ activeSubItem, createData, onAdd }) => {
-  const items = createData[activeSubItem] || [];
+export const EmptyMainSub: React.FC<EmptyMainSubProps> = ({
+  activeSubItem,
+  createData,
+  onAdd
+}) => {
   const icons: Record<string, string> = {
     Overview: "/images/overview100blue.png",
     Saving: "/images/saving100blue.png",
@@ -19,15 +23,19 @@ export const Content: React.FC<ContentProps> = ({ activeSubItem, createData, onA
   const handleCreateClick = () => setIsDialogOpen(true);
 
   const handleCreate = (title: string, amount: number) => {
-    onAdd(activeSubItem, `${title} - ${amount}`);
+    onAdd(activeSubItem, title, amount);
     setIsDialogOpen(false);
   };
 
   return (
-    <div>
-      {items.length === 0 && !isDialogOpen && (
+    <div className="empty-message-wrapper">
+      {!isDialogOpen && (
         <div className="empty-message">
-          <img src={icons[activeSubItem]} alt={activeSubItem} className="empty-icon" />
+          <img
+            src={icons[activeSubItem]}
+            alt={activeSubItem}
+            className="empty-icon"
+          />
           <p className="empty-message-title">
             You don't have any {activeSubItem.toLowerCase()}s yet
           </p>
@@ -45,14 +53,6 @@ export const Content: React.FC<ContentProps> = ({ activeSubItem, createData, onA
           onCancel={() => setIsDialogOpen(false)}
           onCreate={handleCreate}
         />
-      )}
-
-      {items.length > 0 && (
-        <ul>
-          {items.map((entry, index) => (
-            <li key={index}>{entry}</li>
-          ))}
-        </ul>
       )}
     </div>
   );
