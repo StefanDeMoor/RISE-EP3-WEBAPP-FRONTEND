@@ -4,7 +4,7 @@ import { Topbar } from './components/Topbar';
 import { Sidebar } from './components/Sidebar';
 import { SubSidebar } from './components/SubSidebar';
 import { EmptyMainSub } from './components/EmptyMainSub';
-import { OverviewPanel } from './components/overview/OverviewPanel';
+import { OverviewPage } from './views/overview/OverviewPage';
 import { useMenu } from './hooks/useMenu';
 import { useCreateData } from './hooks/useCreateData';
 
@@ -31,19 +31,25 @@ const App: React.FC = () => {
         )}
 
         <div className="content">
-          {activeItem === 'Create' && currentItems.length === 0 && (
-            <EmptyMainSub
-              activeSubItem={activeSubItem}
-              createData={createData}
-              onAdd={(category, title, amount) =>
-                addOverviewItem(category as any, title, amount)
-              }
-            />
-          )}
+          {activeItem === 'Create' && (() => {
+            if (activeSubItem === 'Overview') {
+              return <OverviewPage />;
+            }
 
-          {activeItem === 'Create' && currentItems.length > 0 && (
-            <OverviewPanel item={currentItems[0]} />
-          )}
+            if (currentItems.length === 0) {
+              return (
+                <EmptyMainSub
+                  activeSubItem={activeSubItem}
+                  createData={createData}
+                  onAdd={(category, title, amount) =>
+                    addOverviewItem(category as any, title, amount)
+                  }
+                />
+              );
+            }
+
+            return null;
+          })()}
         </div>
       </div>
     </div>
