@@ -5,8 +5,8 @@ import { Sidebar } from './components/Sidebar';
 import { SubSidebar } from './components/SubSidebar';
 import { EmptyMainSub } from './components/EmptyMainSub';
 import { OverviewPage } from './views/overview/OverviewPage';
-import { useMenu } from './hooks/useMenu';
-import { useCreateData } from './hooks/useCreateData';
+import { useMenu } from './hooks/frontend/useMenu';
+import { useCreateData } from './hooks/frontend/useCreateData';
 
 const App: React.FC = () => {
   const menuItems = ['Create', 'Customers', 'Products', 'Sales'];

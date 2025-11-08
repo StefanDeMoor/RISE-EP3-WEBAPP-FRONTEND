@@ -1,4 +1,5 @@
 import React from 'react';
+import "../styling/sidebar/Sidebar.css"
 
 type SidebarProps = {
   items: string[];
