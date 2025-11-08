@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styling/OverviewHeader.css";
+import "../../styling/overview/OverviewHeader.css";
 
 type OverviewHeaderProps = {
   title: string;

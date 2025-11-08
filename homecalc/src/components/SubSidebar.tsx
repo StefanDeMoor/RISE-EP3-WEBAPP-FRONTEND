@@ -24,7 +24,7 @@ export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSel
         {items.map(item => {
           const iconSrc = activeItem === item ? activeIcons[item] : defaultIcons[item];
           const itemStyle = {
-            backgroundColor: activeItem === item ? 'white' : '#25466C', 
+            backgroundColor: activeItem === item ? 'white' : '#25466C',
             color: activeItem === item ? '#25466C' : 'white',
             fontWeight: activeItem === item ? 'bold' : 'normal',
           };
@@ -36,7 +36,7 @@ export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSel
               className="sub-sidebar-item"
               onClick={() => onSelect(item)}
             >
-              <span>{item}</span>
+              <span className="sub-sidebar-text">{item}</span>
               <img src={iconSrc} alt={`${item} icon`} className="sub-sidebar-icon" />
             </li>
           );

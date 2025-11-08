@@ -21,28 +21,34 @@ export const Sidebar: React.FC<SidebarProps> = ({ items, activeItem, onSelect })
     Sales: '/images/sales50gold.png',
   };
 
-  const bgColors: Record<string, string> = {
-    Create: '#25466C', 
-    Customers: '#47536B', 
-    Products: '#753742CF', 
-    Sales: '#D4AF37',   
-  };
-
-  const textColors: Record<string, string> = {
+  const sidebarBgColors: Record<string, string> = {
     Create: '#25466C',
     Customers: '#47536B',
     Products: '#753742CF',
     Sales: '#D4AF37',
   };
 
+  const textColors: Record<string, string> = {
+    Create: '#25466C',
+    Customers: '#25466C',
+    Products: '#25466C',
+    Sales: '#25466C',
+  };
+
   return (
-    <div className="sidebar">
-      <ul>
+    <div
+      className="sidebar"
+      style={{
+        backgroundColor: sidebarBgColors[activeItem] || '#25466C',
+        transition: 'background-color 0.3s ease',
+      }}
+    >
+      <ul className="sidebar-menu">
         {items.map(item => {
           const iconSrc = activeItem === item ? activeIcons[item] : defaultIcons[item];
           const itemStyle = {
-            backgroundColor: activeItem === item ? 'white' : bgColors[item],
-            color: activeItem === item ? textColors[item] : 'white',
+            backgroundColor: activeItem === item ? 'white' : 'transparent', 
+            color: activeItem === item ? sidebarBgColors[activeItem] : 'white',
             fontWeight: activeItem === item ? 'bold' : 'normal',
           };
 
