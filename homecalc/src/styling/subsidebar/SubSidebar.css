@@ -2,9 +2,9 @@
   width: 250px;
   background-color: #25466C;
   color: white;
-  display: flex;              /* zelfde als sidebar */
-  flex-direction: column;     /* kolom layout */
-  justify-content: space-between; /* menu boven, footer onder */
+  display: flex;             
+  flex-direction: column;     
+  justify-content: space-between; 
   border: solid 1px white;
   box-shadow: 6px 0 12px rgba(0, 0, 0, 0.6) !important;
   z-index: 10; 
