@@ -1,5 +1,6 @@
-import React from 'react';
-import "../styling/subsidebar/SubSidebar.css"
+import React, { useState } from 'react';
+import { CreateOverviewDialog } from './overview/CreateOverviewDialog';
+import "../styling/subsidebar/SubSidebar.css";
 
 type SubSidebarProps = {
   items: string[];
@@ -16,6 +17,15 @@ export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSel
   const activeIcons: Record<string, string> = {
     Overview: '/images/overview50blue.png',
     Saving: '/images/saving50blue.png',
+  };
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleOpenDialog = () => setIsDialogOpen(true);
+  const handleCloseDialog = () => setIsDialogOpen(false);
+
+  const handleCreate = (title: string, amount: number) => {
+    setIsDialogOpen(false);
   };
 
   return (
@@ -43,6 +53,19 @@ export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSel
           );
         })}
       </ul>
+
+      <div className="sub-sidebar-footer">
+        <button className="overview-btn" onClick={handleOpenDialog}>
+          Create Overview
+        </button>
+      </div>
+
+      {isDialogOpen && (
+        <CreateOverviewDialog
+          onCancel={handleCloseDialog}
+          onCreate={handleCreate}
+        />
+      )}
     </div>
   );
 };
