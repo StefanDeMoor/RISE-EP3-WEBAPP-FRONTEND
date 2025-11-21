@@ -1,5 +1,5 @@
 import React from "react";
-import { useOverviews } from "../../hooks/backend/overview/POST/useOverviews";
+import { useOverviews } from "../../hooks/backend/overview/GET/useOverviews";
 import { OverviewPanel } from "../../components/overview/OverviewPanel";
 
 export const OverviewPage: React.FC = () => {

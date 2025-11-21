@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { CreateOverviewDialog } from "./overview/CreateOverviewDialog";
+import { useAddOverview } from "../hooks/backend/overview/POST/useAddOverview";
 import '../styling/EmptyMainSub.css'
 
 type EmptyMainSubProps = {
   activeSubItem: string;
-  createData: Record<string, { title: string; amount: number }[]>;
-  onAdd: (category: string, title: string, amount: number) => void;
 };
 
 export const EmptyMainSub: React.FC<EmptyMainSubProps> = ({
-  activeSubItem,
-  createData,
-  onAdd
+  activeSubItem
 }) => {
   const icons: Record<string, string> = {
     Overview: "/images/overview100blue.png",
@@ -19,11 +16,12 @@ export const EmptyMainSub: React.FC<EmptyMainSubProps> = ({
   };
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { addOverview } = useAddOverview();
 
   const handleCreateClick = () => setIsDialogOpen(true);
 
-  const handleCreate = (title: string, amount: number) => {
-    onAdd(activeSubItem, title, amount);
+  const handleCreate = (title: string, totalIncome: number) => {
+    addOverview({ title, totalIncome})
     setIsDialogOpen(false);
   };
 

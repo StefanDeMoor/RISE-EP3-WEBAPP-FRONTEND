@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CreateOverviewDialog } from './overview/CreateOverviewDialog';
+import { useAddOverview } from '../hooks/backend/overview/POST/useAddOverview';
 import "../styling/subsidebar/SubSidebar.css";
 
 type SubSidebarProps = {
@@ -20,11 +21,13 @@ export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSel
   };
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { addOverview } = useAddOverview();
 
   const handleOpenDialog = () => setIsDialogOpen(true);
   const handleCloseDialog = () => setIsDialogOpen(false);
 
-  const handleCreate = (title: string, amount: number) => {
+  const handleCreate = async (title: string, totalIncome: number) => {
+    await addOverview({ title, totalIncome})
     setIsDialogOpen(false);
   };
 
