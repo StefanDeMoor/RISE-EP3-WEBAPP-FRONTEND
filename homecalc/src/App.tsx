@@ -6,11 +6,15 @@ import { SubSidebar } from './components/SubSidebar';
 import { EmptyMainSub } from './components/EmptyMainSub';
 import { OverviewPage } from './views/overview/OverviewPage';
 import { useMenu } from './hooks/frontend/useMenu';
+import { useSnackbar } from './hooks/useSnackbar';
+import { Snackbar } from './components/Snackbar';
 
 const App: React.FC = () => {
   const menuItems = ['Create', 'Customers', 'Products', 'Sales'];
   const { activeItem, setActiveItem } = useMenu('Create');
   const { activeItem: activeSubItem, setActiveItem: setActiveSubItem } = useMenu('Overview');
+
+  const { snackbar, showSnackbar } = useSnackbar();
 
   return (
     <div>
@@ -26,12 +30,13 @@ const App: React.FC = () => {
             items={['Overview', 'Saving']}
             activeItem={activeSubItem}
             onSelect={(item) => setActiveSubItem(item)}
+            showSnackbar={showSnackbar}  
           />
         )}
         <div className="content">
           {activeItem === 'Create' && (() => {
             if (activeSubItem === 'Overview') {
-              return <OverviewPage />;
+              return <OverviewPage showSnackbar={showSnackbar} />; 
             }
             return (
               <EmptyMainSub
@@ -41,6 +46,9 @@ const App: React.FC = () => {
           })()}
         </div>
       </div>
+
+      {/* Snackbar altijd renderen */}
+      <Snackbar snackbar={snackbar} />
     </div>
   );
 };

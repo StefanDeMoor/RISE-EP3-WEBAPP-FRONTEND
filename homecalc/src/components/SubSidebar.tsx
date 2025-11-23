@@ -7,9 +7,10 @@ type SubSidebarProps = {
   items: string[];
   activeItem: string;
   onSelect: (item: string) => void;
+  showSnackbar: (message: string, type: "success" | "error") => void; // ✅ toegevoegd
 };
 
-export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSelect }) => {
+export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSelect, showSnackbar }) => {
   const defaultIcons: Record<string, string> = {
     Overview: '/images/overview50white.png',
     Saving: '/images/saving50white.png',
@@ -27,8 +28,14 @@ export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSel
   const handleCloseDialog = () => setIsDialogOpen(false);
 
   const handleCreate = async (title: string, totalIncome: number) => {
-    await addOverview({ title, totalIncome})
-    setIsDialogOpen(false);
+    try {
+      await addOverview({ title, totalIncome });
+      showSnackbar("Overview created successfully!", "success"); 
+      setIsDialogOpen(false);
+    } catch (err) {
+      console.error(err);
+      showSnackbar("Failed to create overview", "error");
+    }
   };
 
   return (
