@@ -8,6 +8,7 @@ import { OverviewPage } from './views/overview/OverviewPage';
 import { useMenu } from './hooks/frontend/useMenu';
 import { useSnackbar } from './hooks/useSnackbar';
 import { Snackbar } from './components/Snackbar';
+import { useOverviews } from './hooks/backend/overview/GET/useOverviews';
 
 const App: React.FC = () => {
   const menuItems = ['Create', 'Customers', 'Products', 'Sales'];
@@ -15,6 +16,7 @@ const App: React.FC = () => {
   const { activeItem: activeSubItem, setActiveItem: setActiveSubItem } = useMenu('Overview');
 
   const { snackbar, showSnackbar } = useSnackbar();
+  const { overviews, loading, error, fetchOverviews } = useOverviews(); 
 
   return (
     <div>
@@ -30,24 +32,27 @@ const App: React.FC = () => {
             items={['Overview', 'Saving']}
             activeItem={activeSubItem}
             onSelect={(item) => setActiveSubItem(item)}
-            showSnackbar={showSnackbar}  
+            showSnackbar={showSnackbar}
+            fetchOverviews={fetchOverviews}
           />
         )}
         <div className="content">
           {activeItem === 'Create' && (() => {
             if (activeSubItem === 'Overview') {
-              return <OverviewPage showSnackbar={showSnackbar} />; 
+              return (
+                <OverviewPage
+                  showSnackbar={showSnackbar}
+                  overviews={overviews}
+                  loading={loading}
+                  error={error}
+                />
+              );
             }
-            return (
-              <EmptyMainSub
-                activeSubItem={activeSubItem}
-              />
-            );
+            return <EmptyMainSub activeSubItem={activeSubItem} />;
           })()}
         </div>
       </div>
 
-      {/* Snackbar altijd renderen */}
       <Snackbar snackbar={snackbar} />
     </div>
   );

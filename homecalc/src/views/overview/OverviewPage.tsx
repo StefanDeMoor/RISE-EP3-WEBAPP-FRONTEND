@@ -1,14 +1,21 @@
 import React from "react";
-import { useOverviews } from "../../hooks/backend/overview/GET/useOverviews";
 import { OverviewPanel } from "../../components/overview/OverviewPanel";
+
+type Overview = {
+  id: number;
+  title: string;
+  totalIncome: number;
+  result: number;
+};
 
 type OverviewPageProps = {
   showSnackbar: (message: string, type: "success" | "error") => void;
+  overviews: Overview[];
+  loading: boolean;
+  error: string | null;
 };
 
-export const OverviewPage: React.FC<OverviewPageProps> = ({ showSnackbar }) => {
-  const { overviews, loading, error } = useOverviews();
-
+export const OverviewPage: React.FC<OverviewPageProps> = ({ showSnackbar, overviews, loading, error }) => {
   if (loading) return <p>Loading overviews...</p>;
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
 

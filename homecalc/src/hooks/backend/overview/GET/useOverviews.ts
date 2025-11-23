@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export type Overview = {
   id: number;
@@ -12,30 +12,32 @@ export const useOverviews = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchOverviews = async () => {
-      try {
-        const res = await fetch("http://localhost:5007/api/Overview");
-        if (!res.ok) throw new Error("Failed to fetch overviews");
-        const data = await res.json();
-        setOverviews(
-          data.map((o: any) => ({
-            id: o.id,
-            title: o.title,
-            totalIncome: o.totalIncome ?? 0,
-            result: o.result ?? 0,
-          }))
-        );
-      } catch (err: any) {
-        console.error(err);
-        setError(err.message || "Failed to load overviews");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOverviews();
+  const fetchOverviews = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:5007/api/Overview");
+      if (!res.ok) throw new Error("Failed to fetch overviews");
+      const data = await res.json();
+      setOverviews(
+        data.map((o: any) => ({
+          id: o.id,
+          title: o.title,
+          totalIncome: o.totalIncome ?? 0,
+          result: o.result ?? 0,
+        }))
+      );
+      setError(null);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Failed to load overviews");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  return { overviews, loading, error };
+  useEffect(() => {
+    fetchOverviews();
+  }, [fetchOverviews]);
+
+  return { overviews, loading, error, fetchOverviews };
 };
