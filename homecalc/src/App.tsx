@@ -6,52 +6,54 @@ import { SubSidebar } from './components/SubSidebar';
 import { EmptyMainSub } from './components/EmptyMainSub';
 import { OverviewPage } from './views/overview/OverviewPage';
 import { useMenu } from './hooks/frontend/useMenu';
-import { useCreateData } from './hooks/frontend/useCreateData';
+import { useSnackbar } from './hooks/useSnackbar';
+import { Snackbar } from './components/Snackbar';
+import { useOverviews } from './hooks/backend/overview/GET/useOverviews';
 
 const App: React.FC = () => {
   const menuItems = ['Create', 'Customers', 'Products', 'Sales'];
-
   const { activeItem, setActiveItem } = useMenu('Create');
-  const { activeSubItem, setActiveSubItem, createData, addOverviewItem } = useCreateData();
+  const { activeItem: activeSubItem, setActiveItem: setActiveSubItem } = useMenu('Overview');
 
-  const currentItems = createData[activeSubItem] || [];
+  const { snackbar, showSnackbar } = useSnackbar();
+  const { overviews, loading, error, fetchOverviews } = useOverviews(); 
 
   return (
     <div>
       <Topbar />
       <div className="main">
-        <Sidebar items={menuItems} activeItem={activeItem} onSelect={setActiveItem} />
-
+        <Sidebar
+          items={menuItems}
+          activeItem={activeItem}
+          onSelect={setActiveItem}
+        />
         {activeItem === 'Create' && (
           <SubSidebar
             items={['Overview', 'Saving']}
             activeItem={activeSubItem}
-            onSelect={(item) => setActiveSubItem(item as any)}
+            onSelect={(item) => setActiveSubItem(item)}
+            showSnackbar={showSnackbar}
+            fetchOverviews={fetchOverviews}
           />
         )}
-
         <div className="content">
           {activeItem === 'Create' && (() => {
             if (activeSubItem === 'Overview') {
-              return <OverviewPage />;
-            }
-
-            if (currentItems.length === 0) {
               return (
-                <EmptyMainSub
-                  activeSubItem={activeSubItem}
-                  createData={createData}
-                  onAdd={(category, title, amount) =>
-                    addOverviewItem(category as any, title, amount)
-                  }
+                <OverviewPage
+                  showSnackbar={showSnackbar}
+                  overviews={overviews}
+                  loading={loading}
+                  error={error}
                 />
               );
             }
-
-            return null;
+            return <EmptyMainSub activeSubItem={activeSubItem} />;
           })()}
         </div>
       </div>
+
+      <Snackbar snackbar={snackbar} />
     </div>
   );
 };

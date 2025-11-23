@@ -1,13 +1,17 @@
-import React from 'react';
-import "../styling/subsidebar/SubSidebar.css"
+import React, { useState } from 'react';
+import { CreateOverviewDialog } from './overview/CreateOverviewDialog';
+import { useAddOverview } from '../hooks/backend/overview/POST/useAddOverview';
+import "../styling/subsidebar/SubSidebar.css";
 
 type SubSidebarProps = {
   items: string[];
   activeItem: string;
   onSelect: (item: string) => void;
+  showSnackbar: (message: string, type: "success" | "error") => void;
+  fetchOverviews: () => Promise<void>;
 };
 
-export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSelect }) => {
+export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSelect, showSnackbar, fetchOverviews }) => {
   const defaultIcons: Record<string, string> = {
     Overview: '/images/overview50white.png',
     Saving: '/images/saving50white.png',
@@ -16,6 +20,24 @@ export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSel
   const activeIcons: Record<string, string> = {
     Overview: '/images/overview50blue.png',
     Saving: '/images/saving50blue.png',
+  };
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { addOverview } = useAddOverview();
+
+  const handleOpenDialog = () => setIsDialogOpen(true);
+  const handleCloseDialog = () => setIsDialogOpen(false);
+
+  const handleCreate = async (title: string, totalIncome: number) => {
+    try {
+      await addOverview({ title, totalIncome });
+      await fetchOverviews();
+      showSnackbar("Overview created successfully!", "success"); 
+      setIsDialogOpen(false);
+    } catch (err) {
+      console.error(err);
+      showSnackbar("Failed to create overview", "error");
+    }
   };
 
   return (
@@ -43,6 +65,19 @@ export const SubSidebar: React.FC<SubSidebarProps> = ({ items, activeItem, onSel
           );
         })}
       </ul>
+
+      <div className="sub-sidebar-footer">
+        <button className="overview-btn" onClick={handleOpenDialog}>
+          Create Overview
+        </button>
+      </div>
+
+      {isDialogOpen && (
+        <CreateOverviewDialog
+          onCancel={handleCloseDialog}
+          onCreate={handleCreate}
+        />
+      )}
     </div>
   );
 };

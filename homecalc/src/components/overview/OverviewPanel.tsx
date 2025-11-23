@@ -6,13 +6,13 @@ import { useOverviewDetails } from "../../hooks/backend/overview/GET/useOverview
 import { useAddAmountItem } from "../../hooks/backend/amount/POST/useAddAmountItem";
 import { useUpdateAmountItem, UpdateAmountItem } from "../../hooks/backend/amount/PUT/useUpdateAmountItem";
 import { useDeleteAmountItem } from "../../hooks/backend/amount/DELETE/useDeleteAmountItem";
-
+  
 type OverviewItem = { id: number; title: string; amount: number; };
 type OverviewPanelProps = { item: OverviewItem; };
 type Row = { id: number; name: string; date: string; amount: number | ""; sign: -1 | 1; isEditing: boolean; };
 
 export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const [rows, setRows] = useState<Row[]>([]);
   const inputRefs = useRef<(HTMLElement | null)[]>([]);
   const [focusIndex, setFocusIndex] = useState<number | null>(null);
