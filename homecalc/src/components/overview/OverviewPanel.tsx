@@ -192,7 +192,7 @@ export const OverviewPanel: React.FC<OverviewPanelProps> = ({ item }) => {
             </div>
             <div className="overview-table-footer">
               <div className="footer-label">TOTAL</div>
-              <div className="footer-amount">€{totalAmount.toFixed(2)}</div>
+              <div className={`footer-amount ${totalAmount < 0 ? "negative" : ""}`}>€{totalAmount.toFixed(2)}</div>
             </div>
           </div>
         </div>

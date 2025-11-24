@@ -90,6 +90,10 @@
   padding: 0px 40px;
 }
 
+.footer-amount.negative{
+  color: #c1121f;
+}
+
 .overview-input {
   width: 100%;
   height: 100%;
